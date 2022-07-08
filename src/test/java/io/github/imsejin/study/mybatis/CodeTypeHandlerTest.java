@@ -6,7 +6,6 @@ import io.github.imsejin.study.mybatis.entity.Something;
 import io.github.imsejin.study.mybatis.mapper.SomethingMapper;
 import org.apache.ibatis.scripting.defaults.DefaultParameterHandler;
 import org.junit.jupiter.api.Test;
-import org.mybatis.spring.MyBatisSystemException;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
@@ -15,7 +14,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import java.sql.PreparedStatement;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 /**
  * @see DefaultParameterHandler#setParameters(PreparedStatement)
@@ -53,11 +51,21 @@ class CodeTypeHandlerTest {
         // given
         var betaCode = new BetaCode("B834593849");
 
-        // expect
-        assertThatExceptionOfType(MyBatisSystemException.class)
-                .isThrownBy(() -> somethingMapper.findByCode(betaCode))
-                .withMessageStartingWith("nested exception is org.apache.ibatis.reflection.ReflectionException: " +
-                        "There is no getter for property named 'code'");
+        // when
+        var somethings = somethingMapper.findByCode(betaCode);
+
+        // then
+        // nested exception is org.apache.ibatis.reflection.ReflectionException: There is no getter for property named 'code'
+        assertThat(somethings)
+                .isNotNull()
+                .isNotEmpty()
+                .doesNotContainNull()
+                .hasSize(1)
+                .containsOnly(Something.builder()
+                        .id(6L)
+                        .name("e0a037a8f58b409f80008da7c5019df7")
+                        .code(betaCode)
+                        .build());
     }
 
 }
