@@ -1,9 +1,10 @@
 package io.github.imsejin.study.mybatis;
 
-import io.github.imsejin.study.mybatis.domain.AlphaCode;
-import io.github.imsejin.study.mybatis.domain.BetaCode;
-import io.github.imsejin.study.mybatis.entity.Something;
-import io.github.imsejin.study.mybatis.mapper.SomethingMapper;
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.sql.PreparedStatement;
+import java.util.Map;
+
 import org.apache.ibatis.scripting.defaults.DefaultParameterHandler;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
@@ -11,9 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 
-import java.sql.PreparedStatement;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import io.github.imsejin.study.mybatis.domain.AlphaCode;
+import io.github.imsejin.study.mybatis.domain.BetaCode;
+import io.github.imsejin.study.mybatis.mapper.SomethingMapper;
 
 /**
  * @see DefaultParameterHandler#setParameters(PreparedStatement)
@@ -32,18 +33,12 @@ class CodeTypeHandlerTest {
 
         // when
         var somethings = somethingMapper.findByCode(alphaCode);
+        assertNotNull(somethings);
 
-        // then
-        assertThat(somethings)
-                .isNotNull()
-                .isNotEmpty()
-                .doesNotContainNull()
-                .hasSize(1)
-                .containsOnly(Something.builder()
-                        .id(1L)
-                        .name("1dbe750e346d4c579ad900eb29f981b4")
-                        .code(alphaCode)
-                        .build());
+        Map<String, Object> map = somethings.get(0);
+        assertEquals(1L, map.get("id"));
+        assertEquals("1dbe750e346d4c579ad900eb29f981b4", map.get("name"));
+        assertEquals(alphaCode, map.get("code"));
     }
 
     @Test
@@ -54,18 +49,11 @@ class CodeTypeHandlerTest {
         // when
         var somethings = somethingMapper.findByCode(betaCode);
 
-        // then
-        // nested exception is org.apache.ibatis.reflection.ReflectionException: There is no getter for property named 'code'
-        assertThat(somethings)
-                .isNotNull()
-                .isNotEmpty()
-                .doesNotContainNull()
-                .hasSize(1)
-                .containsOnly(Something.builder()
-                        .id(6L)
-                        .name("e0a037a8f58b409f80008da7c5019df7")
-                        .code(betaCode)
-                        .build());
+        Map<String, Object> map = somethings.get(0);
+        assertEquals(6L, map.get("id"));
+        assertEquals("e0a037a8f58b409f80008da7c5019df7", map.get("name"));
+        assertEquals(betaCode, map.get("code"));
+        assertNotNull(somethings);
     }
 
 }

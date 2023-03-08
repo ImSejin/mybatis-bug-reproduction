@@ -1,19 +1,20 @@
 package io.github.imsejin.study.mybatis.jdbc.mybatis;
 
-import io.github.imsejin.study.mybatis.domain.AlphaCode;
-import io.github.imsejin.study.mybatis.domain.BetaCode;
-import io.github.imsejin.study.mybatis.domain.Code;
-import org.apache.ibatis.type.BaseTypeHandler;
-import org.apache.ibatis.type.JdbcType;
-import org.apache.ibatis.type.MappedJdbcTypes;
-
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-// If you annotate the below annotation, test will be passed.
-// @MappedTypes({Code.class, AlphaCode.class})
+import org.apache.ibatis.type.BaseTypeHandler;
+import org.apache.ibatis.type.JdbcType;
+import org.apache.ibatis.type.MappedJdbcTypes;
+import org.apache.ibatis.type.MappedTypes;
+
+import io.github.imsejin.study.mybatis.domain.AlphaCode;
+import io.github.imsejin.study.mybatis.domain.BetaCode;
+import io.github.imsejin.study.mybatis.domain.Code;
+
+@MappedTypes({BetaCode.class, AlphaCode.class})
 @MappedJdbcTypes(JdbcType.VARCHAR)
 public class CodeTypeHandler extends BaseTypeHandler<Code> {
 
