@@ -12,6 +12,7 @@ import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 
 import java.sql.PreparedStatement;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -28,10 +29,10 @@ class CodeTypeHandlerTest {
     @Test
     void testAlphaCode() {
         // given
-        var alphaCode = new AlphaCode("A194835601");
+        AlphaCode alphaCode = new AlphaCode("A194835601");
 
         // when
-        var somethings = somethingMapper.findByCode(alphaCode);
+        List<Something> somethings = somethingMapper.findByCode(alphaCode);
 
         // then
         assertThat(somethings)
@@ -49,10 +50,10 @@ class CodeTypeHandlerTest {
     @Test
     void testBetaCode() {
         // given
-        var betaCode = new BetaCode("B834593849");
+        BetaCode betaCode = new BetaCode("B834593849");
 
         // when
-        var somethings = somethingMapper.findByCode(betaCode);
+        List<Something> somethings = somethingMapper.findByCode(betaCode);
 
         // then
         // nested exception is org.apache.ibatis.reflection.ReflectionException: There is no getter for property named 'code'
