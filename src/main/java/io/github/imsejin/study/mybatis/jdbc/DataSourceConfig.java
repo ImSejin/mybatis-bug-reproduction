@@ -35,7 +35,7 @@ public class DataSourceConfig {
     @Bean
     @Primary
     static SqlSessionFactory sqlSessionFactory() throws Exception {
-        var factoryBean = new SqlSessionFactoryBean();
+        SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
         factoryBean.setDataSource(dataSource());
 
         return factoryBean.getObject();
