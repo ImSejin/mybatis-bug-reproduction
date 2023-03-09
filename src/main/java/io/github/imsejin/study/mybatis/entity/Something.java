@@ -1,15 +1,13 @@
 package io.github.imsejin.study.mybatis.entity;
 
 import io.github.imsejin.study.mybatis.domain.Code;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Builder
 @ToString
 @EqualsAndHashCode
+@NoArgsConstructor
 public class Something {
 
     private Long id;
@@ -17,5 +15,12 @@ public class Something {
     private String name;
 
     private Code code;
+
+    @Builder
+    public Something(Long id, String name, Code code) {
+        this.id = id;
+        this.name = name;
+        this.code = code;
+    }
 
 }
