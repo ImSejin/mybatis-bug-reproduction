@@ -1,13 +1,11 @@
 package io.github.imsejin.study.mybatis.entity;
 
 import io.github.imsejin.study.mybatis.domain.Code;
-import lombok.Builder;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.ToString;
 
-@Getter
-@Builder
+@Data
 @ToString
 @EqualsAndHashCode
 public class Something {
